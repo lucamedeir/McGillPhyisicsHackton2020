@@ -4,7 +4,6 @@ from physics import *
 import numpy as np
 
 
-
 def main(argv):
     pygame,fig,ax = create_window("McGill Physics Hackaton 2020",640,480)
 
@@ -13,11 +12,12 @@ def main(argv):
     w = 2*np.pi*20
 
     while 1:
-        data,size = our_function(fig,ax,t,w)
+        X,Y = process_data(t,w)
         t += dt
+        plot,size = plot_data(fig,ax,X,Y)
 
         handle_events(pygame)
-        render(pygame,data,size)
+        render(pygame,plot,size)
 
         ax.clear()
 
