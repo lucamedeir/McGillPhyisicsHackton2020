@@ -13,6 +13,9 @@ def create_window(title,width,height):
     fig, ax = plt.subplots()
     font = pygame.font.Font(pygame.font.get_default_font(), 14)
 
+    screen.fill([255, 255, 255])
+    pygame.display.update()
+
     return pygame,font,fig,ax
 
 def handle_events(pygame):
