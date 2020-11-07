@@ -23,7 +23,7 @@ def handle_events(pygame):
 def get_surface_text(font,text):
     '''return a surface from a text from a string list'''
 
-    return font.render(text, True, [0, 0, 0])
+    return font.render(text, True, [0, 0, 0],[255,255,255])
 
 def render(pygame,font,textlist,data,size):
     '''Render the string buffer of the image to the window'''
