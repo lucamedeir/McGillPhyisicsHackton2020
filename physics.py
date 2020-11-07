@@ -7,12 +7,13 @@ def _fig2rgb_array(fig):
     size = fig.canvas.get_width_height()
     return buf,size
 
-def our_function(fig,ax):
+def our_function(fig,ax,t,w):
     '''return an image'''
 
-    t = np.linspace(0, 4*np.pi, 1000)
+    x = np.linspace(0, 4*np.pi, 1000)
+    phase = x+t*w
 
-    ax.plot(t, np.cos(t))
-    ax.plot(t, np.sin(t))
+    ax.plot(x, np.cos(phase))
+    ax.plot(x, np.sin(phase))
 
     return _fig2rgb_array(fig)

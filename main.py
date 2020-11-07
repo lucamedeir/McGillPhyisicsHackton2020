@@ -1,5 +1,6 @@
 import sys,pygame
 from physics import *
+import numpy as np
 
 def main(argv):
     pygame.init()
@@ -12,9 +13,13 @@ def main(argv):
 
     fig, ax = plt.subplots()
 
+    t = 0
+    dt = 0.001
+    w = 2*np.pi
 
     while 1:
-        data,size = our_function(fig,ax)
+        data,size = our_function(fig,ax,t,w)
+        t += dt
         plot = pygame.image.fromstring(data, size, "RGB")
         plotrect = plot.get_rect()
 
