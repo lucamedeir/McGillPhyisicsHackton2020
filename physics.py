@@ -11,6 +11,7 @@ def _fig2rgb_array(fig):
 def plot_data(fig,ax,X,Y):
     '''Convert data to a string buffer'''
     ax.plot(X, Y)
+    ax.set_ylim(0,20)
     return _fig2rgb_array(fig)
 
 def process_data(t,w,A):
