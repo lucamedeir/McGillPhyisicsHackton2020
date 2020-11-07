@@ -11,9 +11,9 @@ def plot_data(fig,ax,X,Y):
     ax.plot(X, Y)
     return _fig2rgb_array(fig)
 
-def process_data(t,w):
+def process_data(t,w,A):
     X = np.linspace(0, 4*np.pi, 1000)
     phase = X+t*w
-    Y = np.cos(phase)
+    Y = A*np.cos(phase)
 
     return X,Y
