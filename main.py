@@ -23,7 +23,8 @@ def main(argv):
 
         screen.blit(plot, plotrect)
         pygame.display.flip()
-        
+        ax.clear()
+
 
 if __name__ == "__main__":
     main(sys.argv)
