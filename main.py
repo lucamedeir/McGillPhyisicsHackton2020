@@ -9,10 +9,11 @@ def main(argv):
 
     t = 0
     dt = 0.001
+    A = 2
     w = 2*np.pi*20
 
     while 1:
-        X,Y = process_data(t,w)
+        X,Y = process_data(t,w,A)
         t += dt
         plot,size = plot_data(fig,ax,X,Y)
 
