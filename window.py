@@ -25,13 +25,13 @@ def get_surface_text(font,textlist):
 
     return font.render(textlist[0], True, [0, 0, 0])
 
-def render(pygame,font,data,size):
+def render(pygame,font,textlist,data,size):
     '''Render the string buffer of the image to the window'''
     plot = pygame.image.fromstring(data, size, "RGB")
     plotrect = plot.get_rect()
 
 
-    text = get_surface_text(font,['teste'])
+    text = get_surface_text(font,textlist)
     textrect = text.get_rect()
 
     screen =  pygame.display.get_surface()

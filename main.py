@@ -12,13 +12,15 @@ def main(argv):
     A = 2
     w = 2*np.pi*20
 
+    textlist = ['']
     while 1:
+        textlist[0] = str(t)
         X,Y = process_data(t,w,A)
         t += dt
         plot,size = plot_data(fig,ax,X,Y)
 
         handle_events(pygame)
-        render(pygame,font,plot,size)
+        render(pygame,font,textlist,plot,size)
 
         ax.clear()
 
