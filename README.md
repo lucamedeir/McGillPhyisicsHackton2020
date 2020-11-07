@@ -1,4 +1,4 @@
-# McGillPhyisicsHackton2020
+# McGillPhysicsHackton2020
 
 The source to our project in the [McGill Physics Hackaton 2020](http://www.physics.mcgill.ca/hackathon/)
 
