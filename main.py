@@ -7,7 +7,7 @@ import numpy as np
 def main(argv):
     pygame,fig,ax = create_window("McGill Physics Hackaton 2020",640,480)
 
-    t = 0
+    t = 0.001
     dt = 0.001
     w = 2*np.pi*20
 
