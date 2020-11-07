@@ -12,13 +12,13 @@ def main(argv):
     A = 2
     w = 2*np.pi*20
 
-    textlist = [['t: '+ str(round(t,3)),0,0],
-                ['A: '+ str(A),700,0],
-                ['w: '+ str(round(w,2)),700,20]]
+    textlist = [get_surface_text(font,['t: '+ str(round(t,3)),0,0]),
+                get_surface_text(font,['A: '+ str(A),700,0]),
+                get_surface_text(font,['w: '+ str(round(w,2)),700,20])]
 
     while 1:
 
-        textlist[0][0] = str(round(t,3))
+        textlist[0] = get_surface_text(font,['t: '+ str(round(t,3)),0,0])
         X,Y = process_data(t,w,A)
         t += dt
         plot,size = plot_data(fig,ax,X,Y)

@@ -25,17 +25,18 @@ def handle_events(pygame):
 
 def get_surface_text(font,text):
     '''return a surface from a text from a string list'''
+    textstring,x,y = text
+    surface = font.render(textstring, True, [0, 0, 0],[255,255,255])
+    rect = surface.get_rect()
+    rect.x = x
+    rect.y = y
+    return surface,rect
 
-    return font.render(text, True, [0, 0, 0],[255,255,255])
 
 def render_text(screen,font,textlist):
-    for text in textlist:
-        textstring,text_x,text_y = text
-        text = get_surface_text(font,textstring)
-        textrect = text.get_rect()
-        textrect.x = text_x
-        textrect.y = text_y
-        screen.blit(text, textrect)
+    for text,rect in textlist:
+        text
+        screen.blit(text, rect)
 
 def render(pygame,font,textlist,data,size):
     '''Render the string buffer of the image to the window'''
