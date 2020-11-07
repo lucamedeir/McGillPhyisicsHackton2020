@@ -5,7 +5,7 @@ import numpy as np
 
 
 def main(argv):
-    pygame,fig,ax = create_window("McGill Physics Hackaton 2020",640,480)
+    pygame,font,fig,ax = create_window("McGill Physics Hackaton 2020",640,480)
 
     t = 0
     dt = 0.001
@@ -18,7 +18,7 @@ def main(argv):
         plot,size = plot_data(fig,ax,X,Y)
 
         handle_events(pygame)
-        render(pygame,plot,size)
+        render(pygame,font,plot,size)
 
         ax.clear()
 

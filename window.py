@@ -8,23 +8,33 @@ def create_window(title,width,height):
     size = width, height
 
     screen = pygame.display.set_mode(size)
-
     pygame.display.set_caption(title)
 
     fig, ax = plt.subplots()
+    font = pygame.font.Font(pygame.font.get_default_font(), 14)
 
-    return pygame,fig,ax
+    return pygame,font,fig,ax
 
 def handle_events(pygame):
     '''Handle all interface events'''
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
 
-def render(pygame,data,size):
+def get_surface_text(font,textlist):
+    '''return a surface from all text from a string list'''
+
+    return font.render(textlist[0], True, [0, 0, 0])
+
+def render(pygame,font,data,size):
     '''Render the string buffer of the image to the window'''
     plot = pygame.image.fromstring(data, size, "RGB")
     plotrect = plot.get_rect()
-    screen =  pygame.display.get_surface()
 
+
+    text = get_surface_text(font,['teste'])
+    textrect = text.get_rect()
+
+    screen =  pygame.display.get_surface()
     screen.blit(plot, plotrect)
+    screen.blit(text, textrect)
     pygame.display.flip()
