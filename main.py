@@ -12,7 +12,9 @@ def main(argv):
     A = 2
     w = 2*np.pi*20
 
-    textlist = [[str(t),50,50]]
+    textlist = [[str(t),0,0],
+                ['A',700,0],
+                ['w',700,20]]
 
     while 1:
 

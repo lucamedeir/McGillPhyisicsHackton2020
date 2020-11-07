@@ -25,6 +25,15 @@ def get_surface_text(font,text):
 
     return font.render(text, True, [0, 0, 0],[255,255,255])
 
+def render_text(screen,font,textlist):
+    for text in textlist:
+        textstring,text_x,text_y = text
+        text = get_surface_text(font,textstring)
+        textrect = text.get_rect()
+        textrect.x = text_x
+        textrect.y = text_y
+        screen.blit(text, textrect)
+
 def render(pygame,font,textlist,data,size):
     '''Render the string buffer of the image to the window'''
 
@@ -36,11 +45,6 @@ def render(pygame,font,textlist,data,size):
     plotrect = plot.get_rect()
     screen.blit(plot, plotrect)
 
-    textstring,text_x,text_y = textlist[0]
-    text = get_surface_text(font,textstring)
-    textrect = text.get_rect()
-    textrect.x = text_x
-    textrect.y = text_y
-    screen.blit(text, textrect)
+    render_text(screen,font,textlist)
 
     pygame.display.flip()
