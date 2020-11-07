@@ -7,12 +7,12 @@ def _fig2rgb_array(fig):
     size = fig.canvas.get_width_height()
     return buf,size
 
-def our_function():
+def our_function(fig,ax):
     '''return an image'''
 
     t = np.linspace(0, 4*np.pi, 1000)
-    fig1, ax = plt.subplots()
+
     ax.plot(t, np.cos(t))
     ax.plot(t, np.sin(t))
 
-    return _fig2rgb_array(fig1)
+    return _fig2rgb_array(fig)

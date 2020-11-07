@@ -1,5 +1,4 @@
 import sys,pygame
-from window import *
 from physics import *
 
 def main(argv):
@@ -11,10 +10,11 @@ def main(argv):
 
     pygame.display.set_caption("McGill Physics Hackaton 2020")
 
+    fig, ax = plt.subplots()
 
 
     while 1:
-        data,size = our_function()
+        data,size = our_function(fig,ax)
         plot = pygame.image.fromstring(data, size, "RGB")
         plotrect = plot.get_rect()
 
@@ -23,6 +23,7 @@ def main(argv):
 
         screen.blit(plot, plotrect)
         pygame.display.flip()
+        
 
 if __name__ == "__main__":
     main(sys.argv)
