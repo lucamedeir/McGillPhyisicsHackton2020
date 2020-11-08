@@ -7,21 +7,34 @@ class Label:
         self._edit_mode = False
         self._name = name
         self._value = value
+        self._edit_mode_value = str(value)
         self._x = x
         self._y = y
 
-        self._textstring = name + ": " + str(value)
+        self.render_and_update()
 
-        surface,rect = self.render()
-        self._surface = surface
-        self._rect = rect
+    def remove_edit_mode_value(self):
+        if len(self._edit_mode_value)>0:
+            self._edit_mode_value = self._edit_mode_value[:-1]
+            self.render_and_update()
+
+    def update_edit_mode_value(self,text):
+        self._edit_mode_value += text
+        self.render_and_update()
 
     def update_value(self,newvalue):
         self._value = newvalue
         self._textstring = self._name + ": " + str(self._value)
-        surface,rect = self.render()
-        self._surface = surface
-        self._rect = rect
+        self.render_and_update()
+
+    def enter_edit_mode(self):
+        self._edit_mode = True
+        self.render_and_update()
+
+    def quit_edit_mode(self):
+        self._edit_mode = False
+        self._value = float(self._edit_mode_value)
+        self.render_and_update()
 
     def get_rect(self):
         return self._rect
@@ -32,16 +45,20 @@ class Label:
     def get_name(self):
         return self._name
 
-    def render(self):
+    def render_and_update(self):
+
         if self._edit_mode:
-            surface = self._font.render(self._textstring, True, [0, 0, 255],[255,255,255])
+            self._textstring = self._name + ": " + self._edit_mode_value
+            surface = self._font.render(self._textstring, True, [0, 0, 0],[0,255,0])
         else:
+            self._textstring = self._name + ": " + str(self._value)
             surface = self._font.render(self._textstring, True, [0, 0, 0],[255,255,255])
         rect = surface.get_rect()
         rect.x = self._x
         rect.y = self._y
 
-        return surface,rect
+        self._surface = surface
+        self._rect = rect
 
 def create_window(title,width,height):
     '''Create the window '''
@@ -60,20 +77,54 @@ def create_window(title,width,height):
 
     return pygame,font,fig,ax
 
-def enter_edit_mode():
-    pass
+def finish_all_edit_modes(textlist):
+    for label in textlist:
+        if label._edit_mode:
+            label.quit_edit_mode()
 
 def check_if_label_was_clicked(pygame,textlist):
+    finish_all_edit_modes(textlist)
     for label in textlist:
         if label.get_rect().collidepoint(pygame.mouse.get_pos()):
+            label.enter_edit_mode()
             print("Click on text: ",label.get_name())
 
+def update_in_edit_mode_label(textlist,key):
+    for label in textlist:
+        if label._edit_mode:
+            label.update_edit_mode_value(key)
+
+def remove_in_edit_mode_label(textlist):
+    for label in textlist:
+        if label._edit_mode:
+            label.remove_edit_mode_value()
 
 def handle_events(pygame,textlist):
     '''Handle all interface events'''
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
+        elif event.type == pygame.KEYDOWN:
+            if  event.key == pygame.K_RETURN:
+                finish_all_edit_modes(textlist)
+                print("Return clicked")
+            elif event.key == pygame.K_0 or \
+                 event.key == pygame.K_1 or \
+                 event.key == pygame.K_2 or \
+                 event.key == pygame.K_3 or \
+                 event.key == pygame.K_4 or \
+                 event.key == pygame.K_5 or \
+                 event.key == pygame.K_6 or \
+                 event.key == pygame.K_7 or \
+                 event.key == pygame.K_8 or \
+                 event.key == pygame.K_9 or \
+                 event.key == pygame.K_PERIOD:
+                    print("Clicked: ",event.unicode)
+                    update_in_edit_mode_label(textlist,event.unicode)
+
+            elif event.key == pygame.K_BACKSPACE:
+                remove_in_edit_mode_label(textlist)
+                print("clicked backspace")
         elif event.type == pygame.MOUSEMOTION:
             if event.rel[0] > 0:  # 'rel' is a tuple (x, y). 'rel[0]' is the x-value.
                 print("You're moving the mouse to the right")
@@ -92,6 +143,10 @@ def render_text(screen,textlist):
     for label in textlist:
         surface,rect = label.get_text()
         screen.blit(surface,rect)
+
+def clear_screen(pygame,):
+    screen =  pygame.display.get_surface()
+    screen.fill([255,255,255])
 
 def render(pygame,textlist,data,size):
     '''Render the string buffer of the image to the window'''

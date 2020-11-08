@@ -16,7 +16,8 @@ def main(argv):
 
     textlist = [Label(font,'t',round(t,3),0,0),
                 Label(font,'A',round(A),700,0),
-                Label(font,'w',round(w,2),700,20)]
+                Label(font,'w',round(w,2),700,20),
+                Label(font,'dt',dt,700,40)]
 
     while 1:
 
@@ -29,6 +30,7 @@ def main(argv):
         render(pygame,textlist,plot,size)
 
         ax.clear()
+        clear_screen(pygame)
 
 
 if __name__ == "__main__":
