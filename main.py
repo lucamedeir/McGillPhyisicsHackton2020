@@ -12,7 +12,7 @@ def main(argv):
     t = 0
     dt = 0.0001
     x0 = 3
-    A = 100
+    A = 5000
     w = 2*np.pi*20
     N = 1000
     L = 10
@@ -20,12 +20,13 @@ def main(argv):
     sigma = 0.05
     k = 100
     norma = 1
+    barrier_size = 1
 
-    variablelist = [t,A,w,dt,N,L,x0,dx,sigma,k,norma]
+    variablelist = [t,A,w,dt,N,L,x0,dx,sigma,k,norma,barrier_size]
 
     textlist = [Label(font,'t',variablelist[0],0,0,editable = False),
-                Label(font,'A',variablelist[1],700,0),
-                Label(font,'w',round(variablelist[2],2),700,20),
+                Label(font,'Barrier Height',variablelist[1],700,0),
+                Label(font,'w(Deprecated)',round(variablelist[2],2),700,20,editable = False),
                 Label(font,'dt',variablelist[3],700,40),
                 Label(font,'N',variablelist[4],700,60,is_int=True),
                 Label(font,'L',variablelist[5],700,80),
@@ -33,13 +34,14 @@ def main(argv):
                 Label(font,'dx',variablelist[7],700,120,editable = False),
                 Label(font,'sigma',variablelist[8],700,140),
                 Label(font,'k',variablelist[9],700,160),
-                Label(font,'norma',variablelist[10],0,20,editable = False)]
+                Label(font,'norma',variablelist[10],0,20,editable = False),
+                Label(font,'Barrier Width',variablelist[11],700,180)]
 
     X = np.linspace(0,variablelist[5],variablelist[4])
 
     Y  = psi0(X,x0,sigma,k)
 
-    V = A*np.exp(-np.power(X-5,2)/(2*2**2))
+    V = A*np.exp(-np.power(X-5,2)/(2*1**2))
     V[V<9*A/10] = 0
     V[V>9*A/10] = A
 
@@ -65,9 +67,12 @@ def main(argv):
             x0 = variablelist[6]
             sigma = variablelist[8]
             A = variablelist[1]
-            V = A*np.exp(-np.power(X-5,2)/(2*0.01**2))
+            V = A*np.exp(-np.power(X-5,2)/(2*variablelist[11]**2))
+            V[V<9*A/10] = 0
+            V[V>9*A/10] = A
+
             k = variablelist[9]
-            Y  = A*psi0(X,x0,sigma,k)
+            Y  = psi0(X,x0,sigma,k)
             variablelist[0] = 0 #t
             dt = variablelist[3]
             dx = variablelist[7]

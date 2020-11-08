@@ -15,7 +15,7 @@ def plot_data(fig,ax,X,Y,V):
     '''Convert data to a string buffer'''
     ax.plot(X, Y)
     ax.plot(X, V)
-    ax.set_xlim(3,6)
+    ax.set_xlim(3,7)
     ax.set_ylim(0,120)
     return _fig2rgb_array(fig)
 
