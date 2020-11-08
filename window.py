@@ -2,7 +2,7 @@ import sys,pygame
 import matplotlib.pyplot as plt
 
 class Label:
-    def __init__(self,font,name, value,x,y):
+    def __init__(self,font,name, value,x,y,editable=True):
         self._font = font
         self._edit_mode = False
         self._name = name
@@ -10,6 +10,7 @@ class Label:
         self._edit_mode_value = str(value)
         self._x = x
         self._y = y
+        self._editable = editable
 
         self.render_and_update()
 
@@ -28,8 +29,9 @@ class Label:
         self.render_and_update()
 
     def enter_edit_mode(self):
-        self._edit_mode = True
-        self.render_and_update()
+        if self._editable:
+            self._edit_mode = True
+            self.render_and_update()
 
     def quit_edit_mode(self):
         self._edit_mode = False
@@ -50,6 +52,9 @@ class Label:
         if self._edit_mode:
             self._textstring = self._name + ": " + self._edit_mode_value
             surface = self._font.render(self._textstring, True, [0, 0, 0],[0,255,0])
+        elif self._editable:
+            self._textstring = self._name + ": " + str(self._value)
+            surface = self._font.render(self._textstring, True, [255, 0, 0],[255,255,255])
         else:
             self._textstring = self._name + ": " + str(self._value)
             surface = self._font.render(self._textstring, True, [0, 0, 0],[255,255,255])
