@@ -18,14 +18,16 @@ def main(argv):
     L = 40*np.pi
     dx = L/N
 
-    textlist = [Label(font,'t',round(t,3),0,0,False),
-                Label(font,'A',round(A),700,0),
-                Label(font,'w',round(w,2),700,20),
-                Label(font,'dt',dt,700,40),
-                Label(font,'N',N,700,60),
-                Label(font,'L',L,700,80),
-                Label(font,'x0',x0,700,100),
-                Label(font,'dx',dx,700,120,False)]
+    variablelist = [t,A,w,dt,N,L,x0,dx]
+
+    textlist = [Label(font,'t',round(variablelist[0],3),0,0,False),
+                Label(font,'A',variablelist[1],700,0),
+                Label(font,'w',round(variablelist[2],2),700,20),
+                Label(font,'dt',variablelist[3],700,40),
+                Label(font,'N',variablelist[4],700,60),
+                Label(font,'L',variablelist[5],700,80),
+                Label(font,'x0',variablelist[6],700,100),
+                Label(font,'dx',variablelist[7],700,120,False)]
 
 
     Y = np.zeros(N)
