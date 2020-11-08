@@ -7,7 +7,7 @@ import numpy as np
 
 
 def main(argv):
-    pygame,font,fig,ax = create_window("McGill Physics Hackaton 2020",1240,480)
+    pygame,font,fig,ax = create_window("McGill Physics Hackathon 2020",1240,480)
 
     t = 0
     dt = 0.0001
