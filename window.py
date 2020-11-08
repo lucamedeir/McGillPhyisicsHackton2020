@@ -1,6 +1,48 @@
 import sys,pygame
 import matplotlib.pyplot as plt
 
+class Label:
+    def __init__(self,font,name, value,x,y):
+        self._font = font
+        self._edit_mode = False
+        self._name = name
+        self._value = value
+        self._x = x
+        self._y = y
+
+        self._textstring = name + ": " + str(value)
+
+        surface,rect = self.render()
+        self._surface = surface
+        self._rect = rect
+
+    def update_value(self,newvalue):
+        self._value = newvalue
+        self._textstring = self._name + ": " + str(self._value)
+        surface,rect = self.render()
+        self._surface = surface
+        self._rect = rect
+
+    def get_rect(self):
+        return self._rect
+
+    def get_text(self):
+        return self._surface,self._rect
+
+    def get_name(self):
+        return self._name
+
+    def render(self):
+        if self._edit_mode:
+            surface = self._font.render(self._textstring, True, [0, 0, 255],[255,255,255])
+        else:
+            surface = self._font.render(self._textstring, True, [0, 0, 0],[255,255,255])
+        rect = surface.get_rect()
+        rect.x = self._x
+        rect.y = self._y
+
+        return surface,rect
+
 def create_window(title,width,height):
     '''Create the window '''
     pygame.init()
@@ -22,9 +64,9 @@ def enter_edit_mode():
     pass
 
 def check_if_label_was_clicked(pygame,textlist):
-    for _,rect,id in textlist:
-        if rect.collidepoint(pygame.mouse.get_pos()):
-            print("Click on text: ",id)
+    for label in textlist:
+        if label.get_rect().collidepoint(pygame.mouse.get_pos()):
+            print("Click on text: ",label.get_name())
 
 
 def handle_events(pygame,textlist):
@@ -46,21 +88,12 @@ def handle_events(pygame,textlist):
         elif event.type == pygame.MOUSEBUTTONUP:
             print("You released the mouse button")
 
-def get_surface_text(font,text,id):
-    '''return a surface from a text from a string list'''
-    textstring,x,y = text
-    surface = font.render(textstring, True, [0, 0, 0],[255,255,255])
-    rect = surface.get_rect()
-    rect.x = x
-    rect.y = y
-    return surface,rect,id
+def render_text(screen,textlist):
+    for label in textlist:
+        surface,rect = label.get_text()
+        screen.blit(surface,rect)
 
-
-def render_text(screen,font,textlist):
-    for text,rect,_ in textlist:
-        screen.blit(text, rect)
-
-def render(pygame,font,textlist,data,size):
+def render(pygame,textlist,data,size):
     '''Render the string buffer of the image to the window'''
 
 
@@ -71,6 +104,6 @@ def render(pygame,font,textlist,data,size):
     plotrect = plot.get_rect()
     screen.blit(plot, plotrect)
 
-    render_text(screen,font,textlist)
+    render_text(screen,textlist)
 
     pygame.display.flip()
