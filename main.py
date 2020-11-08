@@ -14,13 +14,13 @@ def main(argv):
     x0 = 20*np.pi
     A = 1
     w = 2*np.pi*20
-    N = 10000
+    N = 1000
     L = 40*np.pi
     dx = L/N
 
     variablelist = [t,A,w,dt,N,L,x0,dx]
 
-    textlist = [Label(font,'t',round(variablelist[0],3),0,0,editable = False),
+    textlist = [Label(font,'t',variablelist[0],0,0,editable = False),
                 Label(font,'A',variablelist[1],700,0),
                 Label(font,'w',round(variablelist[2],2),700,20),
                 Label(font,'dt',variablelist[3],700,40),
@@ -45,7 +45,7 @@ def main(argv):
             Jacobiano = np.zeros(variablelist[4],dtype=np.complex)
             variablelist[0] = 0 #t
 
-        textlist[0].update_value(round(variablelist[0],3)) # update time t
+        textlist[0].update_value(variablelist[0]) # update time t
         X,Y = process_data_real(variablelist[0], #t
                                 variablelist[3], #dt
                                 variablelist[4], #N
@@ -54,7 +54,7 @@ def main(argv):
                                 variablelist[6], #x0
                                 variablelist[1], #A
                                 Y)
-        variablelist[0] += dt
+        variablelist[0] += variablelist[3] # t+=dt
 
         Amp = np.real(np.conj(Y)*Y)
         Y = Y/np.sqrt(np.sum(Amp*dx))

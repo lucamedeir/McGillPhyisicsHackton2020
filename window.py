@@ -9,7 +9,7 @@ class Label:
         self._value = value
         self._edit_mode_value = str(value)
         self._x = x
-        self._is_int = True
+        self._is_int = is_int
         self._y = y
         self._editable = editable
 
