@@ -15,7 +15,7 @@ def plot_data(fig,ax,X,Y):
     return _fig2rgb_array(fig)
 
 def psi0(X,x0):
-    return np.exp(-np.power(X-x0,2)/10)*np.exp(1j)
+    return np.exp(-np.power(X-x0,2)/10)*np.exp(1j*2*np.pi*4)
 
 def dydx():
     pass
@@ -35,7 +35,6 @@ def process_data_real(t,dt,N,L,dx,x0,A,psi):
     else:
         Y = psi
 
-    Laplaciano = np.zeros(N,dtype=np.complex)
     Laplaciano = np.convolve(psi,np.array([1,-2,1]) /dx**2)
 
 

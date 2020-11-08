@@ -2,13 +2,14 @@ import sys,pygame
 import matplotlib.pyplot as plt
 
 class Label:
-    def __init__(self,font,name, value,x,y,editable=True):
+    def __init__(self,font,name, value,x,y,editable=True,is_int=False):
         self._font = font
         self._edit_mode = False
         self._name = name
         self._value = value
         self._edit_mode_value = str(value)
         self._x = x
+        self._is_int = True
         self._y = y
         self._editable = editable
 
@@ -35,7 +36,10 @@ class Label:
 
     def quit_edit_mode(self):
         self._edit_mode = False
-        self._value = float(self._edit_mode_value)
+        if not self._is_int:
+            self._value = float(self._edit_mode_value)
+        else:
+            self._value = int(self._edit_mode_value)
         self.render_and_update()
 
     def get_rect(self):
@@ -106,6 +110,7 @@ def remove_in_edit_mode_label(textlist):
 
 def handle_events(pygame,textlist):
     '''Handle all interface events'''
+    update_variables = False
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -113,6 +118,8 @@ def handle_events(pygame,textlist):
             if  event.key == pygame.K_RETURN:
                 finish_all_edit_modes(textlist)
                 print("Return clicked")
+            elif event.key == pygame.K_u:
+                update_variables = True
             elif event.key == pygame.K_0 or \
                  event.key == pygame.K_1 or \
                  event.key == pygame.K_2 or \
@@ -143,6 +150,7 @@ def handle_events(pygame,textlist):
                 print("You pressed the right mouse button")
         elif event.type == pygame.MOUSEBUTTONUP:
             print("You released the mouse button")
+    return update_variables
 
 def render_text(screen,textlist):
     for label in textlist:
