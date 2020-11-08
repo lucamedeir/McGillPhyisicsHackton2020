@@ -11,8 +11,8 @@ def main(argv):
 
     t = 0
     dt = 0.0001
-    x0 = 1
-    A = 1
+    x0 = 3
+    A = 100
     w = 2*np.pi*20
     N = 1000
     L = 10
@@ -37,12 +37,16 @@ def main(argv):
 
     X = np.linspace(0,variablelist[5],variablelist[4])
 
-    Y  = A*psi0(X,x0,sigma,k)
+    Y  = psi0(X,x0,sigma,k)
+
+    V = A*np.exp(-np.power(X-5,2)/(2*2**2))
+    V[V<9*A/10] = 0
+    V[V>9*A/10] = A
 
 
     print(dt/dx**2)
 
-    LU,U2 = getLUU2(dt,dx,N)
+    LU,U2 = getLUU2(dt,dx,N,V)
 
     N = variablelist[4]
     update_variables = False
@@ -60,13 +64,14 @@ def main(argv):
             X = np.linspace(0,variablelist[5],N)
             x0 = variablelist[6]
             sigma = variablelist[8]
+            A = variablelist[1]
+            V = A*np.exp(-np.power(X-5,2)/(2*0.01**2))
             k = variablelist[9]
             Y  = A*psi0(X,x0,sigma,k)
-
             variablelist[0] = 0 #t
             dt = variablelist[3]
             dx = variablelist[7]
-            LU,U2 = getLUU2(dt,dx,N)
+            LU,U2 = getLUU2(dt,dx,N,V)
             print(dt/dx**2)
 
         textlist[0].update_value(variablelist[0]) # update time t
@@ -86,7 +91,7 @@ def main(argv):
         sum = np.sum(Amp*dx)
         variablelist[10] = sum
         textlist[10].update_value(variablelist[10])
-        plot,size = plot_data(fig,ax,X,Amp)
+        plot,size = plot_data(fig,ax,X,Amp,V)
 
         update_variables = handle_events(pygame,textlist)
 
