@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.integrate as sint
+from numpy.linalg import solve
 
 def _fig2rgb_array(fig):
     '''Convert plot in figure to a string buffer'''
@@ -12,24 +13,33 @@ def _fig2rgb_array(fig):
 def plot_data(fig,ax,X,Y):
     '''Convert data to a string buffer'''
     ax.plot(X, Y)
-    plt.xlim(420,580)
     return _fig2rgb_array(fig)
 
-def psi0(X,x0):
-    return np.exp(-np.power(X-x0,2)/10)*np.exp(1j*2*np.pi*4)
+def psi0(X,x0,sigma,k):
+    return np.exp(-np.power(X-x0,2)/2/sigma**2)*np.exp(1j*k)
 
-def process_data_real(t,dt,N,L,dx,x0,A,psi,X):
+def process_data_real(t,dt,N,L,dx,x0,A,sigma,k,psi,X,I,U_I):
 
+    a1 = 1 + 1j*dt/dx**2/2
+    a2 = -1j*dt/dx**2/4
+    b1 = 1-1j*dt/dx**2/2
+    b2 = 1j*dt/dx**2/4
 
     if t == 0:
-        Y = A*psi0(X,x0)
+        Y = A*psi0(X,x0,sigma,k)
     else:
         Y = psi
 
-    Laplaciano = np.convolve(Y,np.array([1,-2,1]) /dx**2)
-    dY = 1j*Laplaciano[1:N+1]/2 # -V*psi
+    # boundaries conditions: Infinite wall at the borders
+    Y[0] = 0
+    Y[-1] = 0
 
-    Y = Y + dt*dY
+    W = a1*I+a2*U_I
+    P = b1*I+b2*U_I
+    v = P@Y
+
+    Y = solve(W,v)
+
     return Y
 
 def process_data(t,w,A):
