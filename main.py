@@ -11,7 +11,7 @@ def main(argv):
 
     t = 0
     dt = 0.00001
-    x0 = 0.02
+    x0 = 0.25
     A = 1
     w = 2*np.pi*20
     N = 200
@@ -39,9 +39,12 @@ def main(argv):
 
     Y  = A*psi0(X,x0,sigma,k)
 
+
+    print(dt/dx**2)
+
+    LU,U2 = getLUU2(dt,dx,N)
+
     N = variablelist[4]
-    I = np.identity(N)
-    U_I = np.tri(N,N,-1)-np.tri(N,N,-2) + np.tri(N,N,1)-np.tri(N,N,0)
     update_variables = False
     while 1:
 
@@ -60,9 +63,11 @@ def main(argv):
             k = variablelist[9]
             Y  = A*psi0(X,x0,sigma,k)
 
-            I = np.identity(N)
-            U_I = np.tri(N,N,-1)-np.tri(N,N,-2) + np.tri(N,N,1)-np.tri(N,N,0)
             variablelist[0] = 0 #t
+            dt = variablelist[3]
+            dx = variablelist[7]
+            LU,U2 = getLUU2(dt,dx,N)
+            print(dt/dx**2)
 
         textlist[0].update_value(variablelist[0]) # update time t
         Y = process_data_real(variablelist[0], #t
@@ -74,7 +79,7 @@ def main(argv):
                                 variablelist[1], #A
                                 variablelist[7], #sigma
                                 variablelist[8], #k
-                                Y,X,I,U_I)
+                                Y,X,LU,U2)
         variablelist[0] += variablelist[3] # t+=dt
 
         Amp = np.real(np.conj(Y)*Y)

@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy.integrate as sint
+import scipy.sparse.linalg
+import scipy.sparse
 from numpy.linalg import solve
 
 def _fig2rgb_array(fig):
@@ -18,26 +19,34 @@ def plot_data(fig,ax,X,Y):
 def psi0(X,x0,sigma,k):
     return np.exp(-np.power(X-x0,2)/(2*sigma**2))   *np.exp(1j*k)/sigma/np.sqrt(2*np.pi)
 
-def process_data_real(t,dt,N,L,dx,x0,A,sigma,k,psi,X,I,U_I):
+def getLUU2(dt,dx,N):
+    a = 1 + 1j*dt/dx**2
 
-    a1 = 1 + 1j*dt/dx**2/2
-    a2 = -1j*dt/dx**2/4
-    b1 = 1-1j*dt/dx**2/2
-    b2 = 1j*dt/dx**2/4
+    # From Christoph Wachter 2017 Bachelor Thesis - University of Graz
+    o = np.ones(N,np.complex)
+    alp = a*o/2
+    xi = o+a*o
+    gamma = o-a*o
+    diags =[-1,0,1]
+    vecs1 =[-alp,xi,-alp]
+    vecs2 =[alp,gamma,alp]
+    U1 = scipy.sparse.spdiags(vecs1,diags,N,N)
+    U1.tocsc()
+    U2 = scipy.sparse.spdiags(vecs2,diags,N,N)
+    U2.tocsc()
 
-    Y = psi
+    LU = scipy.sparse.linalg.splu(U1)
 
+    return LU,U2
+
+def process_data_real(t,dt,N,L,dx,x0,A,sigma,k,Y,X,LU,U2):
     # boundaries conditions: Infinite wall at the borders
     Y[0] = 0
     Y[-1] = 0
 
-    W = a1*I+a2*U_I
-    P = b1*I+b2*U_I
-    v = P@Y
+    b = U2.dot(Y)
+    return LU.solve(b)
 
-    Y = solve(W,v)
-
-    return Y
 
 def process_data(t,w,A):
 
