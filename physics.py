@@ -17,7 +17,7 @@ def plot_data(fig,ax,X,Y):
     return _fig2rgb_array(fig)
 
 def psi0(X,x0,sigma,k):
-    return np.exp(-np.power(X-x0,2)/(2*sigma**2))   *np.exp(1j*k)/sigma/np.sqrt(2*np.pi)
+    return np.exp(-np.power(X-x0,2)/(2*sigma**2))   *np.exp(1j*k*X)/sigma/np.sqrt(np.pi)
 
 def getLUU2(dt,dx,N):
     a = 1j*dt/dx**2
