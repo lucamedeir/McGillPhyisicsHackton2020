@@ -36,7 +36,7 @@ def main(argv):
                 Label(font,'k',variablelist[9],700,160),
                 Label(font,'norma',variablelist[10],0,20,editable = False),
                 Label(font,'Barrier Width',variablelist[11],700,180),
-                Label(font,'This simulates a wave package collision on a barrier',0,700,250,editable = False),
+                Label(font,'This simulates a wave packet collision on a barrier',0,700,250,editable = False),
                 Label(font,'Red labels are editable (press return to confirm)',0,700,270,editable = False),
                 Label(font,"Press key 'u' to update and reset simulation",0,700,290,editable = False)]
 
