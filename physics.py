@@ -14,15 +14,14 @@ def plot_data(fig,ax,X,Y):
     ax.plot(X, Y)
     return _fig2rgb_array(fig)
 
-def psi0(X):
-    return np.exp(-np.power(X-20*np.pi,2)/10)*np.exp(1j)
+def psi0(X,x0):
+    return np.exp(-np.power(X-x0,2)/10)*np.exp(1j)
 
-def process_data_real(t,dt,N,psi):
-    X = np.linspace(0,40*np.pi,N)
-    dx = 40*np.pi/N
+def process_data_real(t,dt,N,L,dx,x0,A,psi):
+    X = np.linspace(0,L,N)
 
     if t == 0:
-        Y = psi0(X)
+        Y = A*psi0(X,x0)
     else:
         Y = psi
 
