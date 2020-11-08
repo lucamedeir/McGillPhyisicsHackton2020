@@ -11,11 +11,11 @@ def main(argv):
 
     t = 0
     dt = 0.0001
-    x0 = 20*np.pi
+    x0 = 500
     A = 1
     w = 2*np.pi*20
-    N = 1000
-    L = 40*np.pi
+    N = 100000
+    L = 1000
     dx = L/N
 
     variablelist = [t,A,w,dt,N,L,x0,dx]
@@ -58,8 +58,10 @@ def main(argv):
         variablelist[0] += variablelist[3] # t+=dt
 
         Amp = np.real(np.conj(Y)*Y)
-        Y = Y/np.sqrt(np.sum(Amp*dx))
-        plot,size = plot_data(fig,ax,X,np.real(Y))
+        sum = np.sum(Amp*dx)
+        print(sum)
+        Y = Y/np.sqrt(sum)
+        plot,size = plot_data(fig,ax,X,Amp/np.sum(Amp))
 
         update_variables = handle_events(pygame,textlist)
 
