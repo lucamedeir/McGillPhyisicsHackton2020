@@ -10,15 +10,15 @@ def main(argv):
     pygame,font,fig,ax = create_window("McGill Physics Hackaton 2020",1240,480)
 
     t = 0
-    dt = 0.00001
-    x0 = 0.25
+    dt = 0.0001
+    x0 = 1
     A = 1
     w = 2*np.pi*20
-    N = 200
-    L = 0.5
+    N = 1000
+    L = 10
     dx = L/N
-    sigma = 0.01
-    k = 10
+    sigma = 0.05
+    k = 100
     norma = 1
 
     variablelist = [t,A,w,dt,N,L,x0,dx,sigma,k,norma]
@@ -86,7 +86,6 @@ def main(argv):
         sum = np.sum(Amp*dx)
         variablelist[10] = sum
         textlist[10].update_value(variablelist[10])
-        Y = Y
         plot,size = plot_data(fig,ax,X,Amp)
 
         update_variables = handle_events(pygame,textlist)

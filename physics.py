@@ -14,6 +14,7 @@ def _fig2rgb_array(fig):
 def plot_data(fig,ax,X,Y):
     '''Convert data to a string buffer'''
     ax.plot(X, Y)
+    ax.set_xlim(1,4)
     return _fig2rgb_array(fig)
 
 def psi0(X,x0,sigma,k):
