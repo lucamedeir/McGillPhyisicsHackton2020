@@ -20,7 +20,7 @@ def psi0(X,x0,sigma,k):
     return np.exp(-np.power(X-x0,2)/(2*sigma**2))   *np.exp(1j*k)/sigma/np.sqrt(2*np.pi)
 
 def getLUU2(dt,dx,N):
-    a = 1 + 1j*dt/dx**2
+    a = 1j*dt/dx**2
 
     # From Christoph Wachter 2017 Bachelor Thesis - University of Graz
     o = np.ones(N,np.complex)
