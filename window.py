@@ -119,7 +119,9 @@ def handle_events(pygame,textlist):
                 finish_all_edit_modes(textlist)
                 print("Return clicked")
             elif event.key == pygame.K_u:
+                finish_all_edit_modes(textlist)
                 update_variables = True
+                print("update clicked")
             elif event.key == pygame.K_0 or \
                  event.key == pygame.K_1 or \
                  event.key == pygame.K_2 or \

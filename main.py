@@ -31,6 +31,7 @@ def main(argv):
 
 
     Y = np.zeros(variablelist[4],dtype=np.complex) #N
+    X = np.linspace(0,variablelist[5],variablelist[4])
     update_variables = False
     while 1:
 
@@ -42,18 +43,18 @@ def main(argv):
             update_variables = False
             variablelist[7] = variablelist[5]/variablelist[4] # dx = L/N
             textlist[7].update_value(variablelist[7])
-            Jacobiano = np.zeros(variablelist[4],dtype=np.complex)
+            X = np.linspace(0,variablelist[5],variablelist[4])
             variablelist[0] = 0 #t
 
         textlist[0].update_value(variablelist[0]) # update time t
-        X,Y = process_data_real(variablelist[0], #t
+        Y = process_data_real(variablelist[0], #t
                                 variablelist[3], #dt
                                 variablelist[4], #N
                                 variablelist[5], #L
                                 variablelist[7], #dx
                                 variablelist[6], #x0
                                 variablelist[1], #A
-                                Y)
+                                Y,X)
         variablelist[0] += variablelist[3] # t+=dt
 
         Amp = np.real(np.conj(Y)*Y)
