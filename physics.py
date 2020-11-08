@@ -25,10 +25,7 @@ def process_data_real(t,dt,N,L,dx,x0,A,sigma,k,psi,X,I,U_I):
     b1 = 1-1j*dt/dx**2/2
     b2 = 1j*dt/dx**2/4
 
-    if t == 0:
-        Y = A*psi0(X,x0,sigma,k)
-    else:
-        Y = psi
+    Y = psi
 
     # boundaries conditions: Infinite wall at the borders
     Y[0] = 0

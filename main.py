@@ -35,9 +35,9 @@ def main(argv):
                 Label(font,'k',variablelist[9],700,160),
                 Label(font,'norma',variablelist[10],0,20,editable = False)]
 
-
-    Y = np.zeros(variablelist[4],dtype=np.complex) #N
     X = np.linspace(0,variablelist[5],variablelist[4])
+
+    Y  = A*psi0(X,x0,sigma,k)
 
     N = variablelist[4]
     I = np.identity(N)
@@ -55,7 +55,7 @@ def main(argv):
             variablelist[7] = variablelist[5]/N # dx = L/N
             textlist[7].update_value(variablelist[7])
             X = np.linspace(0,variablelist[5],N)
-
+            Y  = A*psi0(X,x0,sigma,k)
 
             I = np.identity(N)
             U_I = np.tri(N,N,-1)-np.tri(N,N,-2) + np.tri(N,N,1)-np.tri(N,N,0)
@@ -78,8 +78,8 @@ def main(argv):
         sum = np.sum(Amp*dx)
         variablelist[10] = sum
         textlist[10].update_value(variablelist[10])
-        Y = Y/np.sqrt(sum)
-        plot,size = plot_data(fig,ax,X,Amp/sum)
+        Y = Y
+        plot,size = plot_data(fig,ax,X,Amp)
 
         update_variables = handle_events(pygame,textlist)
 
