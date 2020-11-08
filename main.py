@@ -35,9 +35,11 @@ def main(argv):
 
     while 1:
 
-        textlist[0].update_value(round(t,3))
+        textlist[0].update_value(round(variablelist[0],3)) # update time t
         X,Y = process_data_real(t,dt,N,L,dx,x0,A,Y)
-        t += dt
+        variablelist[0] += dt
+        t = variablelist[0]
+        
         Amp = np.real(np.conj(Y)*Y)
         Y = Y/np.sqrt(np.sum(Amp*dx))
         Amp = Amp/np.sum(Amp*dx)
