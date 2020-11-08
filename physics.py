@@ -16,7 +16,7 @@ def plot_data(fig,ax,X,Y):
     return _fig2rgb_array(fig)
 
 def psi0(X,x0,sigma,k):
-    return np.exp(-np.power(X-x0,2)/2/sigma**2)*np.exp(1j*k)
+    return np.exp(-np.power(X-x0,2)/(2*sigma**2))   *np.exp(1j*k)/sigma/np.sqrt(2*np.pi)
 
 def process_data_real(t,dt,N,L,dx,x0,A,sigma,k,psi,X,I,U_I):
 

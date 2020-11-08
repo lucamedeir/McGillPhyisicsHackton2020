@@ -11,11 +11,11 @@ def main(argv):
 
     t = 0
     dt = 0.00001
-    x0 = 0.2
+    x0 = 0.02
     A = 1
     w = 2*np.pi*20
     N = 200
-    L = 1
+    L = 0.5
     dx = L/N
     sigma = 0.01
     k = 10
@@ -55,6 +55,9 @@ def main(argv):
             variablelist[7] = variablelist[5]/N # dx = L/N
             textlist[7].update_value(variablelist[7])
             X = np.linspace(0,variablelist[5],N)
+            x0 = variablelist[6]
+            sigma = variablelist[8]
+            k = variablelist[9]
             Y  = A*psi0(X,x0,sigma,k)
 
             I = np.identity(N)
